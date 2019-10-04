@@ -1,0 +1,454 @@
+<Activity mc:Ignorable="sap sap2010" x:Class="_5_2_Send_Report" this:_5_2_Send_Report.strSubProcessName="%[Send Report]" xmlns="http://schemas.microsoft.com/netfx/2009/xaml/activities" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:mva="clr-namespace:Microsoft.VisualBasic.Activities;assembly=System.Activities" xmlns:s="clr-namespace:System;assembly=mscorlib" xmlns:sap="http://schemas.microsoft.com/netfx/2009/xaml/activities/presentation" xmlns:sap2010="http://schemas.microsoft.com/netfx/2010/xaml/activities/presentation" xmlns:scg="clr-namespace:System.Collections.Generic;assembly=mscorlib" xmlns:sd="clr-namespace:System.Data;assembly=System.Data" xmlns:this="clr-namespace:" xmlns:ui="http://schemas.uipath.com/workflow/activities" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+  <x:Members>
+    <x:Property Name="strStageName" Type="InArgument(x:String)" />
+    <x:Property Name="strErrorMessage" Type="OutArgument(x:String)" />
+    <x:Property Name="strSubProcessName" Type="InArgument(x:String)" />
+    <x:Property Name="strCountMailsOut" Type="InArgument(x:String)" />
+    <x:Property Name="strProcessedFiles" Type="InArgument(x:String)" />
+    <x:Property Name="intCountOpenOrder" Type="InArgument(x:Int32)" />
+    <x:Property Name="intCountDailyBilling" Type="InArgument(x:Int32)" />
+    <x:Property Name="intCountPOFound" Type="InArgument(x:Int32)" />
+    <x:Property Name="intCountPONoFound" Type="InArgument(x:Int32)" />
+    <x:Property Name="dtErrorReport" Type="InArgument(sd:DataTable)" />
+    <x:Property Name="strCountMailsWithoutAttachment" Type="InArgument(x:String)" />
+    <x:Property Name="dicProperties" Type="InArgument(scg:Dictionary(x:String, sd:DataTable))" />
+    <x:Property Name="strMetrics" Type="OutArgument(x:String)" />
+    <x:Property Name="intCountItemTotal" Type="InArgument(x:Int32)" />
+    <x:Property Name="intCountItemProcessed" Type="InArgument(x:Int32)" />
+  </x:Members>
+  <mva:VisualBasic.Settings>
+    <x:Null />
+  </mva:VisualBasic.Settings>
+  <sap:VirtualizedContainerService.HintSize>764.8,5373.6</sap:VirtualizedContainerService.HintSize>
+  <sap2010:WorkflowViewState.IdRef>5.2.Send_Report_1</sap2010:WorkflowViewState.IdRef>
+  <TextExpression.NamespacesForImplementation>
+    <scg:List x:TypeArguments="x:String" Capacity="24">
+      <x:String>System.Activities</x:String>
+      <x:String>System.Activities.Statements</x:String>
+      <x:String>System.Activities.Expressions</x:String>
+      <x:String>System.Activities.Validation</x:String>
+      <x:String>System.Activities.XamlIntegration</x:String>
+      <x:String>Microsoft.VisualBasic</x:String>
+      <x:String>Microsoft.VisualBasic.Activities</x:String>
+      <x:String>System</x:String>
+      <x:String>System.Collections</x:String>
+      <x:String>System.Collections.Generic</x:String>
+      <x:String>System.Data</x:String>
+      <x:String>System.Diagnostics</x:String>
+      <x:String>System.Drawing</x:String>
+      <x:String>System.IO</x:String>
+      <x:String>System.Linq</x:String>
+      <x:String>System.Net.Mail</x:String>
+      <x:String>System.Xml</x:String>
+      <x:String>System.Xml.Linq</x:String>
+      <x:String>UiPath.Core</x:String>
+      <x:String>UiPath.Core.Activities</x:String>
+      <x:String>System.Windows.Markup</x:String>
+      <x:String>Newtonsoft.Json</x:String>
+      <x:String>Newtonsoft.Json.Linq</x:String>
+      <x:String>System.Xml.Serialization</x:String>
+    </scg:List>
+  </TextExpression.NamespacesForImplementation>
+  <TextExpression.ReferencesForImplementation>
+    <scg:List x:TypeArguments="AssemblyReference" Capacity="40">
+      <AssemblyReference>System.Activities</AssemblyReference>
+      <AssemblyReference>Microsoft.VisualBasic</AssemblyReference>
+      <AssemblyReference>mscorlib</AssemblyReference>
+      <AssemblyReference>System.Data</AssemblyReference>
+      <AssemblyReference>System.Data.DataSetExtensions</AssemblyReference>
+      <AssemblyReference>System</AssemblyReference>
+      <AssemblyReference>System.Drawing</AssemblyReference>
+      <AssemblyReference>System.Core</AssemblyReference>
+      <AssemblyReference>System.Xml</AssemblyReference>
+      <AssemblyReference>System.Xml.Linq</AssemblyReference>
+      <AssemblyReference>PresentationFramework</AssemblyReference>
+      <AssemblyReference>WindowsBase</AssemblyReference>
+      <AssemblyReference>PresentationCore</AssemblyReference>
+      <AssemblyReference>System.Xaml</AssemblyReference>
+      <AssemblyReference>UiPath.System.Activities</AssemblyReference>
+      <AssemblyReference>UiPath.UiAutomation.Activities</AssemblyReference>
+      <AssemblyReference>System.ServiceModel</AssemblyReference>
+      <AssemblyReference>UiPath.Mail</AssemblyReference>
+      <AssemblyReference>UiPath.Excel</AssemblyReference>
+      <AssemblyReference>Newtonsoft.Json</AssemblyReference>
+      <AssemblyReference>System.ComponentModel.Composition</AssemblyReference>
+    </scg:List>
+  </TextExpression.ReferencesForImplementation>
+  <Sequence DisplayName="5.2.Send_Report" sap:VirtualizedContainerService.HintSize="747.2,5340" sap2010:WorkflowViewState.IdRef="Sequence_1">
+    <Sequence.Variables>
+      <Variable x:TypeArguments="x:String" Name="strPrint" />
+      <Variable x:TypeArguments="x:String" Name="strPrefixLog" />
+      <Variable x:TypeArguments="scg:Dictionary(x:String, sd:DataTable)" Name="dicPOdata" />
+      <Variable x:TypeArguments="x:String" Name="strFile" />
+      <Variable x:TypeArguments="x:Int32" Name="intPositionCounter" />
+      <Variable x:TypeArguments="x:Int32" Name="intKeyCounter" />
+      <Variable x:TypeArguments="x:String" Default="[dicProperties.values(1).rows(0).item(1).tostring]" Name="strPODataPath" />
+      <Variable x:TypeArguments="x:String" Default="[dicProperties.values(2).rows(0).item(1).tostring]" Name="strMetricsPath" />
+      <Variable x:TypeArguments="x:String" Default="[dicProperties.values(2).rows(0).item(2).tostring]" Name="strReportPath" />
+    </Sequence.Variables>
+    <sap:WorkflowViewStateService.ViewState>
+      <scg:Dictionary x:TypeArguments="x:String, x:Object">
+        <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+      </scg:Dictionary>
+    </sap:WorkflowViewStateService.ViewState>
+    <Sequence DisplayName="Data Initialization" sap:VirtualizedContainerService.HintSize="724.8,584.8" sap2010:WorkflowViewState.IdRef="Sequence_13">
+      <sap:WorkflowViewStateService.ViewState>
+        <scg:Dictionary x:TypeArguments="x:String, x:Object">
+          <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+          <x:Boolean x:Key="IsPinned">False</x:Boolean>
+        </scg:Dictionary>
+      </sap:WorkflowViewStateService.ViewState>
+      <Assign DisplayName="Assign Prefix" sap:VirtualizedContainerService.HintSize="314.4,60" sap2010:WorkflowViewState.IdRef="Assign_6">
+        <Assign.To>
+          <OutArgument x:TypeArguments="x:String">[strPrefixLog]</OutArgument>
+        </Assign.To>
+        <Assign.Value>
+          <InArgument x:TypeArguments="x:String">[strStageName+ " &gt;&gt;&gt; "]</InArgument>
+        </Assign.Value>
+      </Assign>
+      <Assign DisplayName="dicAttachment Initialization" sap:VirtualizedContainerService.HintSize="314.4,60" sap2010:WorkflowViewState.IdRef="Assign_7">
+        <Assign.To>
+          <OutArgument x:TypeArguments="scg:Dictionary(x:String, sd:DataTable)">[dicPOdata]</OutArgument>
+        </Assign.To>
+        <Assign.Value>
+          <InArgument x:TypeArguments="scg:Dictionary(x:String, sd:DataTable)">[new Dictionary(Of String, DataTable)]</InArgument>
+        </Assign.Value>
+        <sap:WorkflowViewStateService.ViewState>
+          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+            <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+          </scg:Dictionary>
+        </sap:WorkflowViewStateService.ViewState>
+      </Assign>
+      <ui:ReadTextFile Content="[strFile]" DisplayName="Read Text File" FileName="[strPODataPath]" sap:VirtualizedContainerService.HintSize="314.4,60" sap2010:WorkflowViewState.IdRef="ReadTextFile_1" />
+      <Assign sap:VirtualizedContainerService.HintSize="314.4,60" sap2010:WorkflowViewState.IdRef="Assign_8">
+        <Assign.To>
+          <OutArgument x:TypeArguments="scg:Dictionary(x:String, sd:DataTable)">[dicPOdata]</OutArgument>
+        </Assign.To>
+        <Assign.Value>
+          <InArgument x:TypeArguments="scg:Dictionary(x:String, sd:DataTable)">[JsonConvert.DeserializeObject(Of Dictionary(Of String, DataTable))(strFile)]</InArgument>
+        </Assign.Value>
+        <sap:WorkflowViewStateService.ViewState>
+          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+            <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+          </scg:Dictionary>
+        </sap:WorkflowViewStateService.ViewState>
+      </Assign>
+      <Assign sap:VirtualizedContainerService.HintSize="314.4,60" sap2010:WorkflowViewState.IdRef="Assign_27">
+        <Assign.To>
+          <OutArgument x:TypeArguments="x:Int32">[intKeyCounter]</OutArgument>
+        </Assign.To>
+        <Assign.Value>
+          <InArgument x:TypeArguments="x:Int32">[dicPOdata.Keys.Count]</InArgument>
+        </Assign.Value>
+      </Assign>
+    </Sequence>
+    <ui:LogMessage DisplayName="Log Message - Attachment Read" sap:VirtualizedContainerService.HintSize="724.8,92.8" sap2010:WorkflowViewState.IdRef="LogMessage_1" Level="Trace" Message="[strPrefixLog+&quot; Attachment info was Read and ready to use&quot;]" />
+    <Sequence DisplayName="Email Processing Report" sap:VirtualizedContainerService.HintSize="724.8,917.6" sap2010:WorkflowViewState.IdRef="Sequence_11">
+      <sap:WorkflowViewStateService.ViewState>
+        <scg:Dictionary x:TypeArguments="x:String, x:Object">
+          <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+        </scg:Dictionary>
+      </sap:WorkflowViewStateService.ViewState>
+      <Assign sap:VirtualizedContainerService.HintSize="314.4,60" sap2010:WorkflowViewState.IdRef="Assign_43">
+        <Assign.To>
+          <OutArgument x:TypeArguments="x:String">[strPrint]</OutArgument>
+        </Assign.To>
+        <Assign.Value>
+          <InArgument x:TypeArguments="x:String">["Hi, I'm the Asset Inventory Bot and this is the sumary of my today's process:-"+Environment.NewLine+Environment.NewLine]</InArgument>
+        </Assign.Value>
+      </Assign>
+      <Assign sap:VirtualizedContainerService.HintSize="314.4,60" sap2010:WorkflowViewState.IdRef="Assign_25">
+        <Assign.To>
+          <OutArgument x:TypeArguments="x:String">[strPrint]</OutArgument>
+        </Assign.To>
+        <Assign.Value>
+          <InArgument x:TypeArguments="x:String" xml:space="preserve">[strPrint+"----------  EMAIL PROCESSING  ----------"+Environment.NewLine+Environment.NewLine]</InArgument>
+        </Assign.Value>
+      </Assign>
+      <Assign sap:VirtualizedContainerService.HintSize="314.4,60" sap2010:WorkflowViewState.IdRef="Assign_2">
+        <Assign.To>
+          <OutArgument x:TypeArguments="x:String">[strPrint]</OutArgument>
+        </Assign.To>
+        <Assign.Value>
+          <InArgument x:TypeArguments="x:String">[strPrint+"Mails Processed: "+strCountMailsOut+Environment.NewLine]</InArgument>
+        </Assign.Value>
+      </Assign>
+      <Assign sap:VirtualizedContainerService.HintSize="314.4,60" sap2010:WorkflowViewState.IdRef="Assign_3">
+        <Assign.To>
+          <OutArgument x:TypeArguments="x:String">[strPrint]</OutArgument>
+        </Assign.To>
+        <Assign.Value>
+          <InArgument x:TypeArguments="x:String">[strPrint+"Mails without Attached File: "+strCountMailsWithoutAttachment+Environment.NewLine+Environment.NewLine]</InArgument>
+        </Assign.Value>
+      </Assign>
+      <Assign sap:VirtualizedContainerService.HintSize="314.4,60" sap2010:WorkflowViewState.IdRef="Assign_5">
+        <Assign.To>
+          <OutArgument x:TypeArguments="x:String">[strPrint]</OutArgument>
+        </Assign.To>
+        <Assign.Value>
+          <InArgument x:TypeArguments="x:String">[strPrint+"Processed Files: "+strProcessedFiles+Environment.NewLine]</InArgument>
+        </Assign.Value>
+      </Assign>
+      <Assign sap:VirtualizedContainerService.HintSize="314.4,60" sap2010:WorkflowViewState.IdRef="Assign_28">
+        <Assign.To>
+          <OutArgument x:TypeArguments="x:String">[strPrint]</OutArgument>
+        </Assign.To>
+        <Assign.Value>
+          <InArgument x:TypeArguments="x:String" xml:space="preserve">[strPrint+"   Open Order Files: "+intCountOpenOrder.ToString+Environment.NewLine]</InArgument>
+        </Assign.Value>
+      </Assign>
+      <Assign sap:VirtualizedContainerService.HintSize="314.4,60" sap2010:WorkflowViewState.IdRef="Assign_29">
+        <Assign.To>
+          <OutArgument x:TypeArguments="x:String">[strPrint]</OutArgument>
+        </Assign.To>
+        <Assign.Value>
+          <InArgument x:TypeArguments="x:String" xml:space="preserve">[strPrint+"   DailyBilling Files: "+intCountDailyBilling.ToString+Environment.NewLine]</InArgument>
+        </Assign.Value>
+      </Assign>
+      <ui:LogMessage DisplayName="Log Message" sap:VirtualizedContainerService.HintSize="314.4,92.8" sap2010:WorkflowViewState.IdRef="LogMessage_2" Level="Trace" Message="[strPrefixLog+&quot;Email Processing report generated &quot;]" />
+    </Sequence>
+    <Assign sap:VirtualizedContainerService.HintSize="724.8,60" sap2010:WorkflowViewState.IdRef="Assign_23">
+      <Assign.To>
+        <OutArgument x:TypeArguments="x:Int32">[intPositionCounter]</OutArgument>
+      </Assign.To>
+      <Assign.Value>
+        <InArgument x:TypeArguments="x:Int32">0</InArgument>
+      </Assign.Value>
+    </Assign>
+    <Assign sap:VirtualizedContainerService.HintSize="724.8,60" sap2010:WorkflowViewState.IdRef="Assign_26">
+      <Assign.To>
+        <OutArgument x:TypeArguments="x:String">[strPrint]</OutArgument>
+      </Assign.To>
+      <Assign.Value>
+        <InArgument x:TypeArguments="x:String" xml:space="preserve">[strPrint+Environment.NewLine+"----------  ATTACHMENT PROCESSING  ----------"+Environment.NewLine]</InArgument>
+      </Assign.Value>
+    </Assign>
+    <ui:ForEach x:TypeArguments="x:Object" CurrentIndex="{x:Null}" DisplayName="For Each" sap:VirtualizedContainerService.HintSize="724.8,2074.4" sap2010:WorkflowViewState.IdRef="ForEach`1_1" Values="[dicPOdata.keys]">
+      <ui:ForEach.Body>
+        <ActivityAction x:TypeArguments="x:Object">
+          <ActivityAction.Argument>
+            <DelegateInArgument x:TypeArguments="x:Object" Name="key" />
+          </ActivityAction.Argument>
+          <Sequence sap:VirtualizedContainerService.HintSize="708.8,1940" sap2010:WorkflowViewState.IdRef="Sequence_15">
+            <sap:WorkflowViewStateService.ViewState>
+              <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+              </scg:Dictionary>
+            </sap:WorkflowViewStateService.ViewState>
+            <Sequence DisplayName="Body" sap:VirtualizedContainerService.HintSize="686.4,1682.4" sap2010:WorkflowViewState.IdRef="Sequence_2">
+              <Sequence.Variables>
+                <Variable x:TypeArguments="x:String" Name="strFileName" />
+              </Sequence.Variables>
+              <sap:WorkflowViewStateService.ViewState>
+                <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                  <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                </scg:Dictionary>
+              </sap:WorkflowViewStateService.ViewState>
+              <Assign sap:VirtualizedContainerService.HintSize="664,60" sap2010:WorkflowViewState.IdRef="Assign_10">
+                <Assign.To>
+                  <OutArgument x:TypeArguments="x:String">[strFileName]</OutArgument>
+                </Assign.To>
+                <Assign.Value>
+                  <InArgument x:TypeArguments="x:String">[key.ToString]</InArgument>
+                </Assign.Value>
+              </Assign>
+              <Assign sap:VirtualizedContainerService.HintSize="664,60" sap2010:WorkflowViewState.IdRef="Assign_12">
+                <Assign.To>
+                  <OutArgument x:TypeArguments="x:String">[strFileName]</OutArgument>
+                </Assign.To>
+                <Assign.Value>
+                  <InArgument x:TypeArguments="x:String">[strFileName.Remove(0,25)]</InArgument>
+                </Assign.Value>
+              </Assign>
+              <Assign sap:VirtualizedContainerService.HintSize="664,60" sap2010:WorkflowViewState.IdRef="Assign_9">
+                <Assign.To>
+                  <OutArgument x:TypeArguments="x:String">[strPrint]</OutArgument>
+                </Assign.To>
+                <Assign.Value>
+                  <InArgument x:TypeArguments="x:String">[strPrint+Environment.NewLine+"File Name: "+strFileName+Environment.NewLine]</InArgument>
+                </Assign.Value>
+              </Assign>
+              <If Condition="[intKeyCounter=intPositionCounter]" sap:VirtualizedContainerService.HintSize="664,1157.6" sap2010:WorkflowViewState.IdRef="If_1">
+                <If.Else>
+                  <Sequence sap:VirtualizedContainerService.HintSize="539.2,1008" sap2010:WorkflowViewState.IdRef="Sequence_9">
+                    <Sequence.Variables>
+                      <Variable x:TypeArguments="x:Int32" Name="intPOCounter" />
+                      <Variable x:TypeArguments="x:Int32" Name="intNotValidPOCounter" />
+                    </Sequence.Variables>
+                    <sap:WorkflowViewStateService.ViewState>
+                      <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                        <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                      </scg:Dictionary>
+                    </sap:WorkflowViewStateService.ViewState>
+                    <Assign sap:VirtualizedContainerService.HintSize="516.8,60" sap2010:WorkflowViewState.IdRef="Assign_39">
+                      <Assign.To>
+                        <OutArgument x:TypeArguments="x:Int32">[intPOCounter]</OutArgument>
+                      </Assign.To>
+                      <Assign.Value>
+                        <InArgument x:TypeArguments="x:Int32">[dicPOdata.values(intPositionCounter).rows.count]</InArgument>
+                      </Assign.Value>
+                    </Assign>
+                    <Assign sap:VirtualizedContainerService.HintSize="516.8,60" sap2010:WorkflowViewState.IdRef="Assign_36">
+                      <Assign.To>
+                        <OutArgument x:TypeArguments="x:String">[strPrint]</OutArgument>
+                      </Assign.To>
+                      <Assign.Value>
+                        <InArgument x:TypeArguments="x:String" xml:space="preserve">[strPrint+"   Total PO Numbers: "+intPOCounter.tostring+Environment.NewLine]</InArgument>
+                      </Assign.Value>
+                    </Assign>
+                    <ui:ForEachRow CurrentIndex="{x:Null}" DataTable="[dicPOdata.values(intPositionCounter)]" DisplayName="For Each Row" sap:VirtualizedContainerService.HintSize="516.8,483.2" sap2010:WorkflowViewState.IdRef="ForEachRow_3">
+                      <ui:ForEachRow.Body>
+                        <ActivityAction x:TypeArguments="sd:DataRow">
+                          <ActivityAction.Argument>
+                            <DelegateInArgument x:TypeArguments="sd:DataRow" Name="row" />
+                          </ActivityAction.Argument>
+                          <Sequence DisplayName="Body" sap:VirtualizedContainerService.HintSize="486.4,334.4" sap2010:WorkflowViewState.IdRef="Sequence_8">
+                            <sap:WorkflowViewStateService.ViewState>
+                              <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                              </scg:Dictionary>
+                            </sap:WorkflowViewStateService.ViewState>
+                            <If Condition="[row(1).ToString.Contains(&quot;F&quot;)]" sap:VirtualizedContainerService.HintSize="464,209.6" sap2010:WorkflowViewState.IdRef="If_2">
+                              <If.Then>
+                                <Assign sap:VirtualizedContainerService.HintSize="243.2,60" sap2010:WorkflowViewState.IdRef="Assign_20">
+                                  <Assign.To>
+                                    <OutArgument x:TypeArguments="x:Int32">[intNotValidPOCounter]</OutArgument>
+                                  </Assign.To>
+                                  <Assign.Value>
+                                    <InArgument x:TypeArguments="x:Int32">[intNotValidPOCounter+1]</InArgument>
+                                  </Assign.Value>
+                                </Assign>
+                              </If.Then>
+                            </If>
+                          </Sequence>
+                        </ActivityAction>
+                      </ui:ForEachRow.Body>
+                    </ui:ForEachRow>
+                    <Assign sap:VirtualizedContainerService.HintSize="516.8,60" sap2010:WorkflowViewState.IdRef="Assign_40">
+                      <Assign.To>
+                        <OutArgument x:TypeArguments="x:String">[strPrint]</OutArgument>
+                      </Assign.To>
+                      <Assign.Value>
+                        <InArgument x:TypeArguments="x:String" xml:space="preserve">[strPrint+"   Valid PO Format:  "+(intPOCounter-intNotValidPOCounter).ToString+Environment.NewLine]</InArgument>
+                      </Assign.Value>
+                    </Assign>
+                    <Assign sap:VirtualizedContainerService.HintSize="516.8,60" sap2010:WorkflowViewState.IdRef="Assign_41">
+                      <Assign.To>
+                        <OutArgument x:TypeArguments="x:String">[strPrint]</OutArgument>
+                      </Assign.To>
+                      <Assign.Value>
+                        <InArgument x:TypeArguments="x:String" xml:space="preserve">[strPrint+"   Not Valid PO Format:  "+intNotValidPOCounter.ToString+Environment.NewLine]</InArgument>
+                      </Assign.Value>
+                    </Assign>
+                  </Sequence>
+                </If.Else>
+              </If>
+              <Assign sap:VirtualizedContainerService.HintSize="664,60" sap2010:WorkflowViewState.IdRef="Assign_24">
+                <Assign.To>
+                  <OutArgument x:TypeArguments="x:Int32">[intPositionCounter]</OutArgument>
+                </Assign.To>
+                <Assign.Value>
+                  <InArgument x:TypeArguments="x:Int32">[intPositionCounter+1]</InArgument>
+                </Assign.Value>
+              </Assign>
+            </Sequence>
+            <ui:LogMessage DisplayName="Log Message" sap:VirtualizedContainerService.HintSize="686.4,92.8" sap2010:WorkflowViewState.IdRef="LogMessage_3" Level="Trace" Message="[strPrefixLog+&quot;File Processing report generated &quot;]" />
+          </Sequence>
+        </ActivityAction>
+      </ui:ForEach.Body>
+    </ui:ForEach>
+    <Sequence DisplayName="NetSuite Processing Report" sap:VirtualizedContainerService.HintSize="724.8,817.6" sap2010:WorkflowViewState.IdRef="Sequence_14">
+      <sap:WorkflowViewStateService.ViewState>
+        <scg:Dictionary x:TypeArguments="x:String, x:Object">
+          <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+        </scg:Dictionary>
+      </sap:WorkflowViewStateService.ViewState>
+      <Assign sap:VirtualizedContainerService.HintSize="314.4,60" sap2010:WorkflowViewState.IdRef="Assign_30">
+        <Assign.To>
+          <OutArgument x:TypeArguments="x:String">[strPrint]</OutArgument>
+        </Assign.To>
+        <Assign.Value>
+          <InArgument x:TypeArguments="x:String" xml:space="preserve">[strPrint+Environment.NewLine+"----------  NETSUITE PROCESSING  ----------"+Environment.NewLine+Environment.NewLine]</InArgument>
+        </Assign.Value>
+      </Assign>
+      <Assign sap:VirtualizedContainerService.HintSize="314.4,60" sap2010:WorkflowViewState.IdRef="Assign_31">
+        <Assign.To>
+          <OutArgument x:TypeArguments="x:String">[strPrint]</OutArgument>
+        </Assign.To>
+        <Assign.Value>
+          <InArgument x:TypeArguments="x:String">[strPrint+"Total PO Numbers Found in NetSuite "+intCountPOFound.ToString+Environment.NewLine]</InArgument>
+        </Assign.Value>
+      </Assign>
+      <Assign sap:VirtualizedContainerService.HintSize="314.4,60" sap2010:WorkflowViewState.IdRef="Assign_32">
+        <Assign.To>
+          <OutArgument x:TypeArguments="x:String">[strPrint]</OutArgument>
+        </Assign.To>
+        <Assign.Value>
+          <InArgument x:TypeArguments="x:String">[strPrint+"PO Numbers not Found: "+intCountPONoFound.ToString+Environment.NewLine+Environment.NewLine]</InArgument>
+        </Assign.Value>
+      </Assign>
+      <Assign sap:VirtualizedContainerService.HintSize="314.4,60" sap2010:WorkflowViewState.IdRef="Assign_33">
+        <Assign.To>
+          <OutArgument x:TypeArguments="x:String">[strPrint]</OutArgument>
+        </Assign.To>
+        <Assign.Value>
+          <InArgument x:TypeArguments="x:String">[strPrint+"Total items processed: "+intCountItemTotal.ToString+Environment.NewLine]</InArgument>
+        </Assign.Value>
+      </Assign>
+      <Assign sap:VirtualizedContainerService.HintSize="314.4,60" sap2010:WorkflowViewState.IdRef="Assign_34">
+        <Assign.To>
+          <OutArgument x:TypeArguments="x:String">[strPrint]</OutArgument>
+        </Assign.To>
+        <Assign.Value>
+          <InArgument x:TypeArguments="x:String" xml:space="preserve">[strPrint+"   Sucessful Items: "+intCountItemProcessed.ToString+Environment.NewLine]</InArgument>
+        </Assign.Value>
+      </Assign>
+      <Assign sap:VirtualizedContainerService.HintSize="314.4,60" sap2010:WorkflowViewState.IdRef="Assign_35">
+        <Assign.To>
+          <OutArgument x:TypeArguments="x:String">[strPrint]</OutArgument>
+        </Assign.To>
+        <Assign.Value>
+          <InArgument x:TypeArguments="x:String" xml:space="preserve">[strPrint+"   Items with Exceptions: "+(intCountItemTotal-intCountItemProcessed).ToString+Environment.NewLine+Environment.NewLine]</InArgument>
+        </Assign.Value>
+      </Assign>
+      <ui:LogMessage DisplayName="Log Message" sap:VirtualizedContainerService.HintSize="314.4,92.8" sap2010:WorkflowViewState.IdRef="LogMessage_4" Level="Trace" Message="[strPrefixLog+&quot;Netsuite Processing report generated &quot;]" />
+    </Sequence>
+    <TryCatch DisplayName="Try Catch" sap:VirtualizedContainerService.HintSize="724.8,328" sap2010:WorkflowViewState.IdRef="TryCatch_1">
+      <TryCatch.Try>
+        <Sequence sap:VirtualizedContainerService.HintSize="336.8,440.8" sap2010:WorkflowViewState.IdRef="Sequence_16">
+          <sap:WorkflowViewStateService.ViewState>
+            <scg:Dictionary x:TypeArguments="x:String, x:Object">
+              <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+            </scg:Dictionary>
+          </sap:WorkflowViewStateService.ViewState>
+          <ui:WriteTextFile DisplayName="Write Text File" FileName="[strMetricsPath]" sap:VirtualizedContainerService.HintSize="314.4,88" sap2010:WorkflowViewState.IdRef="WriteTextFile_1" Text="[strPrint]" />
+          <Assign sap:VirtualizedContainerService.HintSize="314.4,60" sap2010:WorkflowViewState.IdRef="Assign_42">
+            <Assign.To>
+              <OutArgument x:TypeArguments="x:String">[strMetrics]</OutArgument>
+            </Assign.To>
+            <Assign.Value>
+              <InArgument x:TypeArguments="x:String">[strPrint]</InArgument>
+            </Assign.Value>
+          </Assign>
+          <ui:WriteCsvFile Encoding="{x:Null}" AddHeaders="True" DataTable="[dtErrorReport]" Delimitator="Comma" DisplayName="Write CSV" FilePath="[strReportPath]" sap:VirtualizedContainerService.HintSize="314.4,88" sap2010:WorkflowViewState.IdRef="WriteCsvFile_1" />
+        </Sequence>
+      </TryCatch.Try>
+      <TryCatch.Catches>
+        <Catch x:TypeArguments="s:Exception" sap:VirtualizedContainerService.HintSize="400,163.2" sap2010:WorkflowViewState.IdRef="Catch`1_1">
+          <sap:WorkflowViewStateService.ViewState>
+            <scg:Dictionary x:TypeArguments="x:String, x:Object">
+              <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+              <x:Boolean x:Key="IsPinned">False</x:Boolean>
+            </scg:Dictionary>
+          </sap:WorkflowViewStateService.ViewState>
+          <ActivityAction x:TypeArguments="s:Exception">
+            <ActivityAction.Argument>
+              <DelegateInArgument x:TypeArguments="s:Exception" Name="exception" />
+            </ActivityAction.Argument>
+            <ui:LogMessage DisplayName="Log Message - Report can't generate" sap:VirtualizedContainerService.HintSize="314.4,92.8" sap2010:WorkflowViewState.IdRef="LogMessage_5" Level="Error" Message="[strPrefixLog+&quot;Report can't generate &quot;]" />
+          </ActivityAction>
+        </Catch>
+      </TryCatch.Catches>
+    </TryCatch>
+  </Sequence>
+</Activity>

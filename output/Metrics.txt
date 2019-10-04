@@ -1,0 +1,27 @@
+Hi, I'm the Asset Inventory Bot and this is the sumary of my today's process:-
+
+----------  EMAIL PROCESSING  ----------
+
+Mails Processed: 1
+Mails without Attached File: 0
+
+Processed Files: 1
+   Open Order Files: 1
+   DailyBilling Files: 0
+
+----------  ATTACHMENT PROCESSING  ----------
+
+File Name: openOrder154824863891x.csv
+   Total PO Numbers: 3
+   Valid PO Format:  2
+   Not Valid PO Format:  1
+
+----------  NETSUITE PROCESSING  ----------
+
+Total PO Numbers Found in NetSuite 1
+PO Numbers not Found: 1
+
+Total items processed: 0
+   Sucessful Items: 0
+   Items with Exceptions: 0
+

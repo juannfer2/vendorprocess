@@ -1,0 +1,17 @@
+{
+"Mode":[{
+  "Production or Development":"Production"}],
+
+  "Inputs and Temps":[{
+    "Attachment Data":"2.Attachment_Processing/AttachmentData.json",
+    "PO Data":"2.Attachment_Processing/POData.json"}],
+    
+  "Outputs":[{
+    "Processed Files":"Out\\Processed Files ",
+    "Metrics":"Out/Metrics.txt",
+    "Error Report":"Out/Error_Report.csv"}],
+    
+  "Mails To Report":[{
+    "S1":"luis.barona@roundtower.com",
+    "S2":"alejandro.gomez@roundtower.com"}]
+    }
