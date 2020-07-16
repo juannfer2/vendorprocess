@@ -50,7 +50,7 @@ This list of applications is:
 
 ---
 
-## Folder sctructure
+## Folder structure
 
 The folder structure is divided by stages where each one is represented with the big square that contains the stages with the correspond name. 
 
