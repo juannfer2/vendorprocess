@@ -22,7 +22,7 @@ Make sure you have installed all of the following prerequisites on your deveolpm
 - UiPath - [Download & Install](https://www.uipath.com)
 ---
 
-## Objetives 
+## Objectives 
 
 The process has been selected for RPA by RoundTower Technologies as part of a larger initiative for internal implementation and re-reselling of RPA projects. The aim of this process automation is linked to the project business case and it is mainly intended to:
 
@@ -32,7 +32,7 @@ The process has been selected for RPA by RoundTower Technologies as part of a la
 
 ---
 
-## Initial conditons 
+## Initial conditions 
 
 The process starts with the next list of initial conditions, otherwise the bot won't process transactions:
 - The bot's  schedule is daily at 9:00 AM.
@@ -131,7 +131,7 @@ When the bot finishes the process, the output visible for the process owner, wil
 
 In this section are presented the templates that are going to be sent by the bot, in this case are two types of mails that are showed in the next table. Each one will have a screenshot and the excel document attached.
 
-### Successful Process
+### Successfull Process
 
 <table>
   <tr>
